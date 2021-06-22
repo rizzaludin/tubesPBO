@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package login;
-
+import login.koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -156,30 +159,75 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         try{
-            Connection c = koneksi.getkoneksi();
-            Statement s = c.createStatement();
-            
-            
-            
-            String sql = "SELECT * FROM login WHERE Username='" + txtuser.getText()
-                    +"' and Password='"+ txtpasword.getText() + "'";
-            ResultSet r = s.executeQuery(sql);
-            
-            if (r.next()){
-                JOptionPane.showMessageDialog(null, "Login Successfully");
-                new Menu().show();
-                 this.dispose();
-                 
-
+        
+      Connection con = koneksi.tryConnect();
+        try {
+            java.sql.Statement stat = con.createStatement();
+            ResultSet result=stat.executeQuery ("select * from mahasiswa where "
+                    + "username='" +txtuser.getText()+"'");
+            if (result.next()) {
+                if (txtpasword.getText().equals(result.getString("password"))){
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                    mahasiswa frm = new mahasiswa();
+                    frm.setVisible(true);
+                    this.setVisible(false);
+                    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+                    this.dispose();
+                } else {
+                        JOptionPane.showMessageDialog(rootPane,"Password Salah");
+                        txtpasword.setText("");
+                        txtuser.requestFocus();
+                }
+            } else {
                 
+                result=stat.executeQuery ("select * from dosen where "
+                    + "username='" +txtuser.getText()+"'");
                 
-            }else{
-                JOptionPane.showMessageDialog(null, "Wrong Username or Password");
-                txtpasword.requestFocus();
+                if (result.next()) {
+                if (txtpasword.getText().equals(result.getString("password"))){
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                    dosen frm = new dosen();
+                    frm.setVisible(true);
+                    this.setVisible(false);
+                    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+                    this.dispose();
+                } else {
+                        JOptionPane.showMessageDialog(rootPane,"Password Salah");
+                        txtpasword.setText("");
+                        txtuser.requestFocus();
+                }
+            } else {
+                    
+                    result=stat.executeQuery ("select * from admin where "
+                    + "username='" +txtuser.getText()+"'");
+                    
+                    if (result.next()) {
+                if (txtpasword.getText().equals(result.getString("password"))){
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                
+                    menupilihan frm = new menupilihan();
+                    frm.setVisible(true);
+                    this.setVisible(false);
+                    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+                    this.dispose();
+                
+                } else {
+                        JOptionPane.showMessageDialog(rootPane,"Password Salah");
+                        txtpasword.setText("");
+                        txtuser.requestFocus();
+                }
+            } else {
+                        JOptionPane.showMessageDialog(rootPane, "User Tidak Ditemukan");
+                txtuser.setText("");
+                txtpasword.setText("");
+                txtuser.requestFocus();
+                    }
+                    
+                }
+                
             }
-        }catch(SQLException e){
-            System.out.println("error");
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Gagal");
         }
        
     }//GEN-LAST:event_jButton1ActionPerformed

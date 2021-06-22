@@ -23,7 +23,7 @@ public class Menu extends javax.swing.JFrame {
     
     private void autonumber(){
         try{
-            Connection c = koneksi.getkoneksi();
+            Connection c = koneksi.tryConnect();
             Statement s = c.createStatement();
             String sql = "SELECT * FROM inventory ORDER BY id DESC";
             ResultSet r = s.executeQuery(sql);

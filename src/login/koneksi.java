@@ -5,39 +5,31 @@
  */
 package login;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
-import javax.swing.JOptionPane;
+import java.sql.SQLException;
 
-
-/**
- *
- * @author lutfi
- */
 public class koneksi {
-
-        private static java.sql.Connection koneksi;
-        
-        public static java.sql.Connection getkoneksi() {
-            if (koneksi == null){
-                try{
-                    String url = "jdbc:mysql://localhost:3306/login";
-                    String user = "root";
-                    String password = "";
-                    DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-                    koneksi = DriverManager.getConnection(url, user, password);
-                    System.out.println("Connection Sucssessfully");
-                }catch (Exception e){
-                    System.out.println("Eror");
-                }
-                try{koneksi = DriverManager.getConnection("jdbc:mysql://localhost/datamahasiswa","root","");
-                }catch (Exception e){
-                    JOptionPane.showMessageDialog(null, "Koneksi Database Gagal");
-        }
+    
+    private static Connection connect;
+    public static Connection tryConnect()
+    {
+            if(connect == null)
+        {
+            try {
+                String url  ="jdbc:mysql://localhost/datalogin";
+                String user = "root";
+                String pass = "";
+            
+                DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+                connect = DriverManager.getConnection(url, user, pass);
+            } catch (SQLException ex) {
+            //Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("WARNING: Can not create connection!");
             }
-            return koneksi;
-        } 
-        public static void main(String[] args){
-        getkoneksi();
+        }
+         return connect;
+    
     }
-    }
+}
    

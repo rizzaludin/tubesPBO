@@ -23,18 +23,18 @@ public class Registrasi extends javax.swing.JFrame {
      */
     public Registrasi() {
         initComponents();
-        txtid.setEnabled(false);
+        txtid.setEnabled(true);
         autonumber();
     }
     
     private void autonumber(){
         try{
-            Connection c = koneksi.getkoneksi();
+            Connection c = koneksi.tryConnect();
             Statement s = c.createStatement();
-            String sql = "SELECT * FROM login ORDER BY id DESC";
+            String sql = "SELECT * FROM mahasiswa ORDER BY ID_MAHASISWA DESC";
             ResultSet r = s.executeQuery(sql);
             if (r.next()) {
-                String NoID = r.getString("id").substring(2);
+                String NoID = r.getString("ID_MAHASISWA").substring(2);
                 String ID = "" +(Integer.parseInt(NoID)+1);
                 String Zero = "";
                 
@@ -45,9 +45,8 @@ public class Registrasi extends javax.swing.JFrame {
                 else if(ID.length()==3)
                 {Zero = "";}
                 
-                txtid.setText("AD" + Zero + ID);
-            }else{
-                txtid.setText("AD001");
+                txtid.setText( Zero + ID);
+            
             }
             r.close();
             s.close();
@@ -211,8 +210,8 @@ public class Registrasi extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Username or Password cannot be empty");
         }else{
             try{
-                Connection c = koneksi.getkoneksi();
-                String sql = "INSERT INTO Login VALUES (?, ?, ?)";
+                Connection c = koneksi.tryConnect();
+                String sql = "INSERT INTO mahasiswa VALUES (?, ?, ?)";
                 PreparedStatement p = c.prepareStatement(sql);
                 p.setString(1, id);
                 p.setString(2, username);
