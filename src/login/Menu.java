@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author lutfi
+ * @author MuhammadNaufalAdiyatma
  */
 public class Menu extends javax.swing.JFrame {
  koneksi koneksi = new koneksi();
