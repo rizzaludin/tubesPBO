@@ -331,10 +331,11 @@ public class admin extends javax.swing.JFrame {
        String status = txtstatus.getText().toString().trim();
        String tempatpkn = txtpkn.getText().toString().trim();
         StringBuilder errorText = new StringBuilder();
-       if(txtnama.getText().length() == 0){
+       if(txtnama.getText().length()  == 0 || txtstatus.getText().length()  == 0 || txtjl.getText().length() == 0|| txtid.getText().length() == 0|| txtpkn.getText().length() == 0){
               errorText.append("Textfield 1 is mandatory\n");
-         txtnama.setBackground(Color.red);
-         
+          JOptionPane.showMessageDialog(null, "harap isi dengan benar,");
+          
+       } else {
         try{
        Connection c = koneksi.tryConnect();
        String sql = "INSERT INTO jadwal VALUES (?, ?, ?, ?, ?)";
