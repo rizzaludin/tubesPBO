@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,13 +25,35 @@ public class admin extends javax.swing.JFrame {
      */
     public admin() {
         initComponents();
+        load_table();
     }
     
-    public void updateDB()
-    {
+    private void load_table(){
+        // membuat tampilan model tabel
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nama");
+        model.addColumn("JUDUL PROPOSAL");
+        model.addColumn("STATUS");
+        model.addColumn("TEMPAT PKN");
+       
         
-        
+        //menampilkan data database kedalam tabel
+        try {
+            int no=1;
+            String sql = "select * from jadwal";
+            java.sql.Connection conn=(Connection)koneksi.tryConnect();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            while(res.next()){
+                model.addRow(new Object[]{res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5)});
+            }
+            jTable1.setModel(model);
+        } catch (Exception e) {
+        }
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,7 +145,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("UPDATE");
+        jButton2.setText("EDIT");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -151,10 +174,11 @@ public class admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4)
-                    .addComponent(jButton3)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +199,7 @@ public class admin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NAMA", "ID", "JUDUL ", "STATUS", "TEMPAT PKN"
+                "ID", "NAMA", "JUDUL ", "STATUS", "TEMPAT PKN"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -191,7 +215,7 @@ public class admin extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 65, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,11 +339,38 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+       
+        try {
+            String sql ="UPDATE jadwal SET ID = '"+txtid.getText()+"', NAMA = '"+txtnama.getText()+"',JUDUL PROPOSAL= '"+txtjl.getText()+"',STATUS= '"+txtstatus.getText()+"' ,WHERE TEMPAT PKN= '"+txtpkn.getText()+"'";
+            java.sql.Connection conn=(Connection)koneksi.tryConnect();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "data berhasil di edit");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Perubahan Data Gagal"+e.getMessage());
+        }
+        load_table();
+        
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-         
+      
+        int baris = jTable1.rowAtPoint(evt.getPoint());
+        String id =jTable1.getValueAt(baris, 1).toString();
+        txtid.setText(id);
+        String nama = jTable1.getValueAt(baris,2).toString();
+        txtnama.setText(nama);
+
+        String jr = jTable1.getValueAt(baris, 3).toString();
+        txtjl.setText(jr);
+        String alamat=jTable1.getValueAt(baris, 4).toString();
+        txtstatus.setText(alamat);
+        String telp = jTable1.getValueAt(baris, 5).toString();
+        txtpkn.setText(telp);
+
+    
         
     }//GEN-LAST:event_jTable1MouseClicked
 
