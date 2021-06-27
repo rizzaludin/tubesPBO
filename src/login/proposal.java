@@ -236,7 +236,7 @@ String cv;
 
     private void btnkembaliActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
-        new Menu().show();
+        new mahasiswa().show();
         this.dispose();
     }                                          
 
