@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author lutfi
  */
 public class admin extends javax.swing.JFrame {
-
+        int hmid;
     /**
      * Creates new form admin
      */
@@ -33,9 +33,9 @@ public class admin extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Nama");
-        model.addColumn("JUDUL PROPOSAL");
+        model.addColumn("JUDUL_PROPOSAL");
         model.addColumn("STATUS");
-        model.addColumn("TEMPAT PKN");
+        model.addColumn("TEMPAT_PKN");
        
         
         //menampilkan data database kedalam tabel
@@ -82,6 +82,7 @@ public class admin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -166,6 +167,8 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("jButton5");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -174,17 +177,22 @@ public class admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(283, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(102, 102, 102)
+                        .addComponent(jButton5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,7 +223,7 @@ public class admin extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,6 +325,24 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+         Connection conn = koneksi.tryConnect();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data tersebut?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0) {
+            try {
+                java.sql.PreparedStatement stmt = conn.prepareStatement("delete from barang where jadwal ='" + txtid.getText() + "'");
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+                
+                txtid.setText("");
+                txtnama.setText("");
+                txtjl.setText("");
+                txtstatus.setText("");
+                txtpkn.setText("");
+                txtid.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }  
+    }  
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstatusActionPerformed
@@ -341,7 +367,8 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
        
         try {
-            String sql ="UPDATE jadwal SET ID = '"+txtid.getText()+"', NAMA = '"+txtnama.getText()+"',JUDUL PROPOSAL= '"+txtjl.getText()+"',STATUS= '"+txtstatus.getText()+"' ,WHERE TEMPAT PKN= '"+txtpkn.getText()+"'";
+            String sql ="UPDATE jadwal SET NAMA = '"+txtnama.getText()+"', JUDUL_PROPOSAL = '"+txtjl.getText()+"', STATUS = '"+txtstatus.getText()+"',TEMPAT_PKN= '"+txtpkn.getText()+"' WHERE ID= '"+txtid.getText()+"'";
+           // String sql ="UPDATE jadwal SET ID = 'txtid.getText()', NAMA = 'txtnama.getText()',JUDUL_PROPOSAL= 'txtjl.getText()',STATUS= 'txtstatus.getText()' ,WHERE TEMPAT_PKN= 'txtpkn.getText()'";
             java.sql.Connection conn=(Connection)koneksi.tryConnect();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql);
             pst.execute();
@@ -355,23 +382,23 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-      
-        int baris = jTable1.rowAtPoint(evt.getPoint());
-        String id =jTable1.getValueAt(baris, 1).toString();
-        txtid.setText(id);
-        String nama = jTable1.getValueAt(baris,2).toString();
+     int baris = jTable1.rowAtPoint(evt.getPoint());
+        String ids = jTable1.getValueAt(baris, 0).toString();
+        txtid.setText(ids);
+        String nama = jTable1.getValueAt(baris, 1).toString();
         txtnama.setText(nama);
+        String proposal = jTable1.getValueAt(baris, 2).toString();
+        txtjl.setText(proposal);
+        String status = jTable1.getValueAt(baris, 3).toString();
+        txtstatus.setText(status);
+        String pkn = jTable1.getValueAt(baris, 4).toString();
+        txtpkn.setText(pkn);
 
-        String jr = jTable1.getValueAt(baris, 3).toString();
-        txtjl.setText(jr);
-        String alamat=jTable1.getValueAt(baris, 4).toString();
-        txtstatus.setText(alamat);
-        String telp = jTable1.getValueAt(baris, 5).toString();
-        txtpkn.setText(telp);
+ //       hmid = Integer.parseInt(ids);
+//        idmhs.setId(ids);
 
-    
-        
+       JOptionPane.showMessageDialog(null, hmid, "Alert", JOptionPane.INFORMATION_MESSAGE);
+      
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -455,6 +482,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
