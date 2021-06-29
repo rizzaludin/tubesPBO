@@ -5,6 +5,13 @@
  */
 package login;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+import com.sun.xml.internal.ws.api.message.Message;
+import java.io.UnsupportedEncodingException;
+import java.util.Properties;
+import javax.swing.JOptionPane;
+import sun.rmi.transport.Transport;
+
 /**
  *
  * @author User
@@ -97,7 +104,33 @@ public class Email extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void btn_kirimActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
 
+            Session session = Session.getInstance(props, new EmailAuth());
+            Message pesan;
+            pesan = new MimeMessage(session);
+
+            InternetAddress dari = new InternetAddress("namaemail@gmail.com", "Dari Java Source Code");
+            pesan.setFrom(dari);
+
+            InternetAddress tujuan = new InternetAddress(penerima.getText());
+
+            pesan.setRecipient(Message.RecipientType.TO, tujuan);
+
+            pesan.setSubject(subjek.getText());
+            pesan.setText(isi.getText());
+            Transport.send(pesan);
+            JOptionPane.showMessageDialog(null,"Email berhasil terkirim ke "+penerima.getText());
+        } catch (UnsupportedEncodingException | MessagingException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -143,4 +176,15 @@ public class Email extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    private static class Session {
+
+        private static Session getInstance(Properties props, EmailAuth emailAuth) {
+            throw new UnsupportedOperationException("Not supported yet."); 
+            //To change body of generated methods, choose Tools | Templates.
+        }
+
+        public Session() {
+        }
+    }
 }
