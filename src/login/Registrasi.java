@@ -223,7 +223,7 @@ public class Registrasi extends javax.swing.JFrame {
                 System.out.println("Error");
             }finally{
                 this.dispose();
-                Login a = new Login();
+                Loginbaru a = new Loginbaru();
                 a.setVisible(true);
             }
         }
@@ -231,7 +231,7 @@ public class Registrasi extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        new Login().show();
+        new Loginbaru().show();
         this.dispose();
         
     }//GEN-LAST:event_jButton2ActionPerformed

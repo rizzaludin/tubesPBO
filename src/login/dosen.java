@@ -62,15 +62,20 @@ public class dosen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NAMA", "JUDUL PROPOSAL", "JADWAL UJIAN ", "PELAKSANAAN PKN"
+                "NAMA", "JUDUL PROPOSAL", "JADWAL UJIAN ", "PELAKSANAAN PKN", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -120,6 +125,11 @@ public class dosen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

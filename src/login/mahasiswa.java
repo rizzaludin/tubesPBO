@@ -5,6 +5,8 @@
  */
 package login;
 
+import java.awt.Menu;
+
 /**
  *
  * @author lutfi
@@ -96,7 +98,7 @@ public class mahasiswa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPPActionPerformed
-        new Menu().show();
+        new menuproposalmahasiswa().show();
         this.dispose();
 
         // TODO add your handling code here:
