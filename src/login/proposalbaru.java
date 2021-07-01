@@ -5,7 +5,6 @@
  */
 package login;
 
-import static com.sun.corba.se.impl.orbutil.CorbaResourceUtil.getText;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import login.koneksi;
 import java.awt.HeadlessException;
@@ -20,19 +19,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import login.sandemail;
+
 
 /**
  *
  * @author MuhammadNaufalAdiyatma
  */
-public class proposal extends javax.swing.JFrame {
+public class proposalbaru extends javax.swing.JFrame {
 String cv;
     String portfolio;
     /**
      * Creates new form proposal
      */
-    public proposal() {
+    public proposalbaru() {
         initComponents();
     }
 
@@ -219,23 +218,12 @@ String cv;
                ps.setBlob(2,is1);
                ps.setBlob(3,is2);
                ps.setString(4, txtemail.getText());
-               System.out.println(id.getText() + is1 + is2 + txtemail.getText() );
-               String text = getText( txtemail.getText());
-               sandemail sandmail = new sandemail();
-               sandemail.sendEmail(txtemail.getText(), cv,"CV");
-               sandemail.sendEmail(txtemail.getText(), portfolio,"portofolio");
-               
                ps.executeUpdate();
-               
-               
-               
                JOptionPane.showMessageDialog(null, "Data Inserted");
               
            }catch(Exception ex){
                JOptionPane.showMessageDialog(null, "Data not Inserted");
            }
-        
-        
     }                                         
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {                                   
