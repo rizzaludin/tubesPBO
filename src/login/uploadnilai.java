@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author lutfi
@@ -21,7 +21,41 @@ public class uploadnilai extends javax.swing.JFrame {
      */
     public uploadnilai() {
         initComponents();
+        tabeltampil();
+        
     }
+    private void tabeltampil(){
+        DefaultTableModel tabel = new DefaultTableModel();
+        tabel.addColumn("nama");
+        tabel.addColumn("nim");
+        tabel.addColumn("tempat");
+        tabel.addColumn("waktu");
+        tabel.addColumn("nilai1");
+        tabel.addColumn("nilai2");
+        tabel.addColumn("nilai3");
+        tabel.addColumn("nilai4");
+        tabel.addColumn("nilai5");
+        tabel.addColumn("nilai6");
+        tabel.addColumn("nilai7");
+        tabel.addColumn("nilai8");
+        tabel.addColumn("nilai9");
+        tabel.addColumn("nilai10");
+        
+        try {
+            int no=1;
+            String sql = "select * from nilai";
+            java.sql.Connection conn=(Connection)koneksi.tryConnect();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            while(res.next()){
+                tabel.addRow(new Object[]{res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getString(7),res.getString(8),res.getString(9),res.getString(10),res.getString(11),res.getString(12),res.getString(13),res.getString(14)});
+            }
+            jTable1.setModel(tabel);
+        } catch (Exception e) {
+        }
+        
+    }
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,6 +176,11 @@ public class uploadnilai extends javax.swing.JFrame {
                 "NAMA", "NIM / ID", "TEMPAT", "WAKTU ", "NILAI 1", "NILAI 2", "NILAI 3", "NILAI 4", "NILAI 5", "NILAI 6", "NILAI 7", "NILAI 8", "NILAI 9", "NILAI 10"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -434,6 +473,10 @@ public class uploadnilai extends javax.swing.JFrame {
         txtnilai9.setText(null);
         txtnilai10.setText(null);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
