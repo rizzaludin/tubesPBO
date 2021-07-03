@@ -114,20 +114,15 @@ public class menuproposalmahasiswa extends javax.swing.JFrame {
                 .addComponent(lbluserlogin)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(37, 37, 37))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(masukkanFile)
-                        .addGap(77, 77, 77)))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(okButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +132,9 @@ public class menuproposalmahasiswa extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(okButton)
                             .addComponent(txtwaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(masukkanFile))
                         .addContainerGap(52, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -181,11 +176,11 @@ public class menuproposalmahasiswa extends javax.swing.JFrame {
         // TODO add your handling code here:
         String NAMA = txtnama.getText().toString().trim();
        String id = txtid.getText().toString().trim();
-       String TEMPAT_PKN = txtwaktu.getText().toString().trim();
-       String WAKTU = txtpkn.getText().toString().trim();
+       String TEMPAT_PKN = txtpkn.getText().toString().trim();
+       String WAKTU = txtwaktu.getText().toString().trim();
        String EMAIL = txtemail.getText().toString().trim();
        StringBuilder errorText = new StringBuilder();
-       if(txtnama.getText().length()  == 0 || txtwaktu.getText().length()  == 0 || txtid.getText().length() == 0|| txtpkn.getText().length() == 0){
+       if(txtnama.getText().length()  == 0 || txtpkn.getText().length()  == 0 || txtid.getText().length() == 0|| txtwaktu.getText().length() == 0|| txtemail.getText().length() == 0){
               errorText.append("Textfield 1 is mandatory\n");
           JOptionPane.showMessageDialog(null, "harap isi dengan benar,");
           
